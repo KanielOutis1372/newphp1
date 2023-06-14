@@ -1,0 +1,84 @@
+.ui.grid {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 1200px;
+    max-width: 1200px;
+    margin: 12px auto;
+}
+
+.ui.table {
+    width: 1200px;
+    max-width: 1200px;
+    margin: 12px auto;
+}
+
+
+.ui.search .prompt {
+    border-radius: 3px;
+}
+
+.ui.input {
+    width: 100%;
+
+}
+
+.search.icon {
+    background-color: #424141;
+    color: #fff;
+}
+
+.ui.table a {
+    color: #333;
+}
+
+.center {
+    text-align: center;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.pull-right {
+    float: right;
+}
+
+.checkbox-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.ui.checkbox,
+.field input {
+    flex-basis: calc(100% / 3);
+    margin: 10px 0 14px 0;
+}
+
+.list-g {
+    padding-top: 12px;
+}
+
+.update-img {
+    border: 1px solid #ddd;
+}
