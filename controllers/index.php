@@ -29,10 +29,10 @@ switch ($action) {
         // $description = $_POST['description'];
         // Product::update($id, $name, $price, $description);
         // header('Location: index.php');
-        $_product = getDataInputForm();
-        $_product->setModifiedDate(date('Y-m-d'));
-        update($_product);
-        // print_r($_product);
+        // $_product = getDataInputForm();
+        // $_product->setModifiedDate(date('Y-m-d'));
+        update();
+        header('Location: index.php');
         break;
     case 'delete':
         $id = $_GET['id'];
@@ -49,12 +49,12 @@ switch ($action) {
         $productUpdate = ProductModel::getProductById($_GET['id']);
         $tags = TagModel::getAllTag();
         $cates = CategoryModel::getAllCate();
-        // print_r($product); 
+        // print_r($productUpdate);
         $title = 'Update product';
         include '../views/edit.php';
         break;
     default:
-        $products = ProductModel::getAllProduct(isset($_GET['limit']) ? $_GET['limit'] : 3, isset($_GET['offset']) ? $_GET['offset'] : 0);
+        $products = ProductModel::getAllProduct(isset($_GET['limit']) ? $_GET['limit'] : 8, isset($_GET['offset']) ? $_GET['offset'] : 0);
         include '../views/list.php';
         break;
     }
@@ -110,7 +110,7 @@ switch ($action) {
         ProductModel::addProduct($_product);
 
         // upload file
-        $target_dir = '../assets/img';
+        $target_dir = '../assets/img/';
 
         $target_file = $target_dir . $_product->getFeaturedImage();
         move_uploaded_file($_FILES["featuredimg"]["tmp_name"], $target_file);
@@ -143,31 +143,43 @@ switch ($action) {
         ProductModel::deleteProduct($id);
     }
 
-    function update($_product) {
+    function update() {
+        $_product = getDataInputForm();
+        $productUpdate = ProductModel::getProductById($_GET['id']);
+        $_product = getDataInputForm();
+        $_product->setModifiedDate(date('Y-m-d'));
+        // print_r($_product);
+        // print_r($productUpdate);
+
         $proId = $_product->getId();
-        ProductModel::updateProduct($proId, $_product);
+     
+        if (!empty($_product->getFeaturedImage())) { 
+            ProductModel::updateProduct($proId, $_product);
+        }
+        else {
+            $_product->setFeaturedImage($productUpdate->getFeaturedImage());
+            ProductModel::updateProduct($proId, $_product);
+        }
+
         $arrTagU = $_product->getTag();
+        ProductModel::deleteProductTags($proId);
         foreach ($arrTagU as $tag) {
-            echo $tag;
-            // ProductModel::deleteProductTags($proId);
-            // ProductModel::addProductTags(TagModel::getIdOfTag($tag));
             ProductModel::updateProductTags($proId, TagModel::getIdOfTag($tag));
         }
 
         $arrCateU = $_product->getCategory();
+        ProductModel::deleteProductCates($proId);
         foreach ($arrCateU as $cate) {
-            echo $cate;
-            // ProductModel::deleteProductCates($proId);
-            // ProductModel::addProductCates(CategoryModel::getIdOfCate($cate));
             ProductModel::updateProductCates($proId, CategoryModel::getIdOfCate($cate));
         }
 
-        // $arrGalleryU = $_product->getGallery();
-        // foreach ($arrGalleryU as $gallery) {
-        //     // echo $gallery;
-        //     ProductModel::deleteProductGalleries($proId);
-        //     ProductModel::addGallery($gallery);
-        // }
+        $arrGalleryU = $_product->getGallery();
+        if (!empty($arrGalleryU) && !empty($arrGalleryU[0])){
+            ProductModel::deleteProductGalleries($proId);
+            foreach ($arrGalleryU as $gallery) {
+                ProductModel::addGallery($gallery);
+            }
+        }
     }
 
     function addproperty($tagName, $cateName) {

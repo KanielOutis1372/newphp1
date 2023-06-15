@@ -200,17 +200,17 @@ class ProductModel {
 
     static function updateProductTags($productId, $tagId) {
         self::connectDB();
-        $query = 'UPDATE ProductTags SET TagId = ? WHERE ProductId =?';
+        $query = 'INSERT INTO PRODUCTTAGS (ProductID, TagID) VALUES (?, ?)';
         $stmt = self::$db->prepare($query);
-        $stmt->bind_param('ii', $tagId, $productId);
+        $stmt->bind_param('ii', $productId, $tagId);
         $stmt->execute();
     }
 
     static function updateProductCates($productId, $cateId) {
         self::connectDB();
-        $query = 'UPDATE ProductCategories SET CategoryID = ? WHERE ProductID =?';
+        $query = 'INSERT INTO PRODUCTCATEGORIES (ProductID, CategoryID) VALUES (?, ?)';
         $stmt = self::$db->prepare($query);
-        $stmt->bind_param('ii', $cateId, $productId);
+        $stmt->bind_param('ii', $productId, $cateId);
         $stmt->execute();
     }
 

@@ -165,13 +165,13 @@
       <?php endforeach ?>
     </tbody>
   </table>
-
+php
   <div class="center">
     <div class="pagination">
       <a href="#">&laquo;</a>
-      <a href="../controllers/index.php?limit=3&offset=0">1</a>
-      <a href="../controllers/index.php?limit=3&offset=3" class="active">2</a>
-      <a href="../controllers/index.php?limit=3&offset=6">3</a>
+      <a href="../controllers/index.php?limit=8&offset=0">1</a>
+      <a href="../controllers/index.php?limit=8&offset=8">2</a>
+      <a href="../controllers/index.php?limit=8&offset=16">3</a>
       <a href="#">&raquo;</a>
     </div>
   </div>
