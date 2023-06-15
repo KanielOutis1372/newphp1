@@ -87,3 +87,17 @@
 .update-img {
     border: 1px solid #ddd;
 }
+
+.ui.form.demo {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.ui.calendar.list {
+    width: 136px;
+}
+
+.ui.input.list {
+    width: 65%;
+}

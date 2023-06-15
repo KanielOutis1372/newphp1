@@ -29,99 +29,82 @@
 
     <div class="row">
 
-      <div class="column">
-        <div class="ui compact menu">
-          <div class="ui simple dropdown item">
-            Date
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              <?php
-                foreach ($products as $value) {
-                  echo '<div class="item">'. $value->getCreatedDate() .'</div>';
-                }
-              ?>
-            </div>
-          </div>
-        </div>
-      </div>
+      <form class="ui form demo" action="../controllers/index.php?action=filter" method="POST" enctype="multipart/form-data">
 
-      <div class="column">
-        <div class="ui compact menu">
-          <div class="ui simple dropdown item">
-            ASC
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              <div class="item">Increase</div>
-              <div class="item">Decrease</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="column">
-        <div class="ui compact menu">
-          <div class="ui simple dropdown item">
-            Category
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              <?php
-                // foreach ($listCategory as $value) {
-                //   echo '<div class="item">'. $value->getCateName() .'</div>';
-                // }
-              ?>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="column">
-        <div class="ui compact menu">
-          <div class="ui simple dropdown item">
-            Select tag
-            <i class="dropdown icon"></i>
-            <div class="menu">
+        <div class="column">
+          <select class="ui dropdown" name="date">
+            <option value="">Date</option>
             <?php
-                // foreach ($listTag as $value) {
-                //   echo '<div class="item">'. $value->getTagName() .'</div>';
-                // }
-              ?>
+            foreach ($products as $value) {
+              echo '<option value="'. $value->getCreatedDate() .'">' . $value->getCreatedDate() . '</option>';
+            }
+            ?>
+          </select>
+        </div>
+
+        <div class="column">
+          <select class="ui dropdown" name="asc">
+            <option value="">ASC</option>
+            <option value="Increase">Increase</option>
+            <option value="Decrease">Decrease</option>
+          </select>
+        </div>
+
+        <div class="column">
+          <select class="ui dropdown" name="cate">
+            <option value="">Category</option>
+            <?php
+            foreach ($cates as $cate) {
+              echo '<option value="'. $cate->getCateName() .'">' . $cate->getCateName() . '</option>';
+            }
+            ?>
+          </select>
+        </div>
+
+        <div class="column">
+        <select class="ui dropdown" name="tag">
+            <option value="">Select tag</option>
+            <?php
+            
+            foreach ($tags as $tag) {
+              echo '<option value="'. $tag->getTagName() .'">' . $tag->getTagName() . '</option>';
+            }
+            ?>
+          </select>
+        </div>
+
+        <div class="column">
+          <div class="ui calendar list" id="standard_calendar">
+            <div class="ui fluid input">
+              <input type="date" id="birthday" name="startday">
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="column">
-        <div class="ui calendar" id="standard_calendar">
-          <div class="ui fluid input">
-            <input type="date" id="birthday" name="birthday">
+        <div class="column">
+          <div class="ui calendar list" id="standard_calendar">
+            <div class="ui fluid input">
+              <input type="date" id="birthday" name="endday">
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="column">
-        <div class="ui calendar" id="standard_calendar">
-          <div class="ui fluid input">
-            <input type="date" id="birthday" name="birthday">
+        <div class="column">
+          <div class="ui input list">
+            <input type="number" placeholder="Price from" name="pricefrom">
           </div>
         </div>
-      </div>
 
-      <div class="column">
-        <div class="ui input">
-          <input type="number" placeholder="Price from">
+        <div class="column">
+          <div class="ui input list">
+            <input type="number" placeholder="Price to" name="priceto">
+          </div>
         </div>
-      </div>
 
-      <div class="column">
-        <div class="ui input">
-          <input type="number" placeholder="Price to">
+        <div class="column">
+          <button class="ui button">Filter</button>
         </div>
-      </div>
-
-      <div class="column">
-        <button class="ui button">Filter</button>
-      </div>
+      </form>
     </div>
   </div>
 
@@ -140,7 +123,7 @@
       </tr>
     </thead>
     <tbody>
-      <?php foreach ($products as $value): ?>
+      <?php foreach ($products as $value) : ?>
         <tr>
           <td><?php echo $value->getCreatedDate() ?></td>
           <td><?php echo $value->getTitle() ?></td>
@@ -158,14 +141,13 @@
           <td><?php echo $value->getCategory() ?></td>
           <td><?php echo $value->getTag() ?></td>
           <td>
-            <a href="../controllers/index.php?action=updateform&id=<?php echo $value->getId()?>"><i class="edit icon"></i></a>
-            <a href="../controllers/index.php?action=delete&id=<?php echo $value->getId()?>"><i class="trash icon"></i></a>
+            <a href="../controllers/index.php?action=updateform&id=<?php echo $value->getId() ?>"><i class="edit icon"></i></a>
+            <a href="../controllers/index.php?action=delete&id=<?php echo $value->getId() ?>"><i class="trash icon"></i></a>
           </td>
         </tr>
       <?php endforeach ?>
     </tbody>
   </table>
-php
   <div class="center">
     <div class="pagination">
       <a href="#">&laquo;</a>

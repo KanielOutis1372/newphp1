@@ -20,6 +20,30 @@ class ProductModel {
         // Thiết lập kết nối cơ sở dữ liệu
     }
 
+    static function getAllProductNoLimit($qrbuilder) {
+        self::connectDB();
+        $stmt = self::$db->prepare($qrbuilder);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $list = array();
+        while ($row = $result->fetch_assoc()) {
+            $product = new Product();
+            $product->setId($row['ID']);
+            $product->setSku($row['SKU']);
+            $product->setTitle($row['Title']);
+            $product->setPrice($row['Price']);
+            $product->setFeaturedImage($row['FeaturedImage']);
+            $product->setDescription($row['Description']);
+            $product->setCreatedDate($row['CreatedDate']);
+            $product->setModifiedDate($row['ModifiedDate']);
+            $product->setCategory($row['Categories']);
+            $product->setTag($row['Tags']);
+            $product->setGallery($row['ImageURLs']);
+            array_push($list, $product);
+        }
+        return $list;
+    }
+
     static function getAllProduct($limit, $offset) {
         self::connectDB();
         $query = 'SELECT P.ID, P.SKU, P.Title, P.Price, P.FeaturedImage, P.Description, P.CreatedDate, P.ModifiedDate,
@@ -54,9 +78,6 @@ class ProductModel {
         }
         return $list;
     }
-
-    
-
 
     //add product
     static function getLastProductId() {
@@ -220,6 +241,11 @@ class ProductModel {
         $stmt = self::$db->prepare($query);
         $stmt->bind_param('sii', $imgUrl, $productId);
         $stmt->execute();   
+    }
+
+    //filter
+    static function filterDate($date) {
+        
     }
 }
 
